@@ -8,6 +8,9 @@ typedef struct objeto
 	float peso;
 } Objeto;
 
+const Objeto objPadroes[7] = {{10, 2}, {5, 3}, {15, 5}, {7, 7}, {6, 1}, {18, 4}, {3, 1}};
+
+
 //// Declarações das Funções ////
 void display();
 void start_padrao();
