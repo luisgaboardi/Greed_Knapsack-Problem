@@ -19,7 +19,9 @@ void display();
 void start_padrao();
 void start_personalizado();
 void sair();
-void greed();
+void greed(int limite, Objeto *obj);
+void greed1(int limite, Objeto *obj, int lenght);
+void print(Objeto *obj, int lenght, int limite);
 
 //// Main ////
 int main(int argc, char const *argv[])
@@ -80,14 +82,54 @@ void start_padrao()
 	printf("\nAperte enter para resolver o problema utilizando um algoritmo ambicioso...\n");
 	getchar();
 	getchar();
-	greed(15);
+	greed(15, objPadroes);
+
+	print(objPadroes, nObj, 15);
 
 }
 
 void start_personalizado()
 {
 	system("clear");
-	printf("Personalizado\n");
+	printf("## Personalizado ##\n");
+	printf("Número de Objetos desejados: ");
+	int size;
+	scanf("%d", &size);
+
+	Objeto *objPersonalizados = malloc(size * sizeof(Objeto));
+
+	printf("\nPreencha os atributos dos %d objetos: (Valor, Peso):\n", size);
+	for(int i = 0; i < size; i++)
+	{
+		printf("\n[%d]\n", i);
+		scanf("%f %f", &(objPersonalizados+i)->valor, &(objPersonalizados+i)->peso);
+		(objPersonalizados+i)->VpP = (objPersonalizados+i)->valor / (objPersonalizados+i)->peso;
+		(objPersonalizados+i)->visitado = -1;
+	}
+
+	printf("\nDefina o peso limite, em Kg: ");
+	float limite;
+	scanf("%f", &limite);
+
+	printf("\nPreenchimento de dados concluído.\nAperte enter para resolver o problema utilizando um algoritmo ambicioso...\n");
+
+	getchar();
+	getchar();
+	greed1(limite, objPersonalizados, size);
+
+	float lucro = 0;
+	float peso = 0;
+	printf("Os elementos que devem ser escolhidos para ter o maior valor, respeitando o limite de peso de %.2f Kg, são:\n\n", limite);
+	for(int i = 0; i < size; i++)
+	{
+		if((objPersonalizados+i)->visitado == 1)
+		{
+			printf("%d Objeto de %.2f Kg (%.2f reais)\n", (objPersonalizados+i)->visitado, (objPersonalizados+i)->peso, (objPersonalizados+i)->valor);
+			lucro += (objPersonalizados+i)->valor;
+			peso += (objPersonalizados+i)->peso;
+		}		
+	}
+	printf("\nTotalizando %.2f reais e %.2f Kg\n", lucro, peso);
 }
 
 
@@ -97,37 +139,62 @@ void sair()
 	exit(EXIT_SUCCESS);
 }
 
-void greed(int limite)
+void greed(int limite, Objeto *obj)
 {
 	int lim = limite;
 	int max = 0, indiceMax = -1;
 
 	for (int i = 0; i < nObj-1; i++)          
 	   	for (int j = 0; j < nObj-i-1; j++)
-	       	if (objPadroes[j].VpP > objPadroes[j+1].VpP) {
-	          	Objeto tmp = objPadroes[j];
-	          	objPadroes[j] = objPadroes[j+1];
-	          	objPadroes[j+1] = tmp;
+	       	if (obj[j].VpP > obj[j+1].VpP) {
+	          	Objeto tmp = obj[j];
+	          	obj[j] = obj[j+1];
+	          	obj[j+1] = tmp;
 	       	}
 
 	for(int i = nObj-1; i > 0; i--)
 	{
-		if(lim - objPadroes[i].peso >= 0) {
-			objPadroes[i].visitado = 1;
-			lim -= objPadroes[i].peso;
+		if(lim - obj[i].peso >= 0) {
+			obj[i].visitado = 1;
+			lim -= obj[i].peso;
 		}	
 	}
+}
 
+void greed1(int limite, Objeto *obj, int lenght)
+{
+	int lim = limite;
+	int max = 0, indiceMax = -1;
+
+	for (int i = 0; i < lenght-1; i++)          
+	   	for (int j = 0; j < lenght-i-1; j++)
+	       	if ((obj+j)->VpP > (obj+j+1)->VpP) {
+	          	Objeto tmp = obj[j];
+	          	obj[j] = obj[j+1];
+	          	obj[j+1] = tmp;
+	       	}
+
+	for(int i = lenght-1; i > 0; i--)
+	{
+		if(lim - (obj+i)->peso >= 0) {
+			(obj+i)->visitado = 1;
+			lim -= (obj+i)->peso;
+		}	
+	}
+}
+
+void print(Objeto *obj, int lenght, int limite)
+{
 	float lucro = 0;
 	float peso = 0;
 	printf("Os elementos que devem ser escolhidos para ter o maior valor, respeitando o limite de peso de %d Kg, são:\n\n", limite);
-	for(int i = 0; i < nObj; i++)
+	for(int i = 0; i < lenght; i++)
 	{
-		if(objPadroes[i].visitado == 1)
+		if(obj[i].visitado == 1)
 		{
-			printf("%d Objeto de %.2f Kg (%.2f reais)\n", objPadroes[i].visitado, objPadroes[i].peso, objPadroes[i].valor);
-			lucro += objPadroes[i].valor;
-			peso += objPadroes[i].peso;
+			printf("%d Objeto de %.2f Kg (%.2f reais)\n", obj[i].visitado, obj[i].peso, obj[i].valor);
+			lucro += obj[i].valor;
+			peso += obj[i].peso;
 		}		
 	}
 	printf("\nTotalizando %.2f reais e %.2f Kg\n", lucro, peso);
