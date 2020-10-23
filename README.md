@@ -8,10 +8,14 @@
 | -- | -- |
 | 18/0022962  |  Luís Guilherme Gaboardi Lins |
 
-## Sobre 
+## Sobre
+![](images/knapsack.png) <br><br>
 O Knapsack Problem se dá por: dada uma lista de objetos, cada um com um peso e com um valor, devemos selecionar a quantidade de cada objeto a fim de que o peso total não ultrapasse um limite pré-definido e, ao mesmo tempo, tenha o maior valor possível.
 
 ## Screenshots
+![](images/1.png) <br><br>
+![](images/2.png) <br><br>
+![](images/3.png) <br><br>
 
 ## Pré-Requisitos
 Compilador GCC, ambiente capaz de executar arquivos .c
