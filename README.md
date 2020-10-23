@@ -43,9 +43,9 @@ Para executar:
 2. `./prog`
 
 ## Uso
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
 
-### Vídeo Explicativo
+1. ReadMe e instruções de execução - https://youtu.be/-Ed_QxzOf-A
+2. Explicação do código - https://youtu.be/4OY8DKLFC08
 
 
 
