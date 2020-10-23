@@ -98,7 +98,7 @@ void start_personalizado()
 
 	Objeto *objPersonalizados = malloc(size * sizeof(Objeto));
 
-	printf("\nPreencha os atributos dos %d objetos: (Valor, Peso):\n", size);
+	printf("\n\nPreencha os atributos dos %d objetos: (Valor Peso):\n", size);
 	for(int i = 0; i < size; i++)
 	{
 		printf("\n[%d]\n", i);
